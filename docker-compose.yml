@@ -11,13 +11,20 @@ services:
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test_pass'
       MYSQL_ROOT_PASSWORD: 'root'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+      interval: 10s
   redis:
     image: "redis:alpine"
     restart: always
     ports:
       - '6380:6379'
-  check-db-started: 
-    image: jwilder/dockerize:0.6.1
+  ready:
+    image: hello-world
     depends_on:
-      - database
-    command: 'dockerize -wait=tcp://db:3306'
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_started

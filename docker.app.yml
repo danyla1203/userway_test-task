@@ -2,7 +2,7 @@
 version: '3.9'
 services:
   database:
-    image: "mysql"
+    image: 'mysql'
     restart: always
     ports:
       - '3307:3306'
@@ -11,6 +11,16 @@ services:
       MYSQL_USER: 'test'
       MYSQL_PASSWORD: 'test_pass'
       MYSQL_ROOT_PASSWORD: 'root'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 5
+      interval: 10s
+  redis:
+    image: 'redis:alpine'
+    restart: always
+    ports:
+      - '6380:6379'
   app:
     build: .
     volumes:
@@ -18,9 +28,13 @@ services:
     container_name: url_shortener
     restart: always
     depends_on:
-      - database
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_started
     ports:
       - 3000:3000
     env_file: .env
     environment:
-      - DB_HOST=database
+      DB_HOST: database
+      REDIS_HOST: redis
