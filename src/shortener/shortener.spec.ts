@@ -1,16 +1,13 @@
 import * as httpMocks from 'node-mocks-http';
-import {
-  getFullUrlCntrl,
-  shortenUrlCntrl,
-} from '../../shortener/shortener.controller';
-import { NotFoundError } from '../../utils/errors/NotFound';
+import { getFullUrlCntrl, shortenUrlCntrl } from './shortener.controller';
+import { NotFoundError } from '../utils/errors/NotFound';
 import {
   getShortenedRecord,
   getShortenedRecordByOrigin,
-} from '../../shortener/shortener.dao';
-import Shorted from '../../db/models/Shorted';
+} from './shortener.dao';
+import Shorted from '../db/models/Shorted';
 
-jest.mock('../../shortener/shortener.dao');
+jest.mock('./shortener.dao');
 
 const mockGetShortenedRecord = jest.mocked(getShortenedRecord);
 const mockGetShortenedRecordByOrigin = jest.mocked(getShortenedRecordByOrigin);

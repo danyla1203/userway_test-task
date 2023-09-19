@@ -1,0 +1,9 @@
+process.env.NODE_ENV = 'test';
+process.env.PORT = '3000';
+process.env.DB_NAME = 'url_shortener';
+process.env.DB_USER = 'test';
+process.env.DB_PASSWORD = 'test_pass';
+process.env.DB_HOST = 'localhost';
+process.env.DB_PORT = '3307';
+process.env.REDIS_PORT = '6380';
+process.env.REDIS_HOST = 'localhost';

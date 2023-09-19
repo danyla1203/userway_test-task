@@ -4,6 +4,7 @@ import sequelizeConnection from '../db/config';
 import { Application } from 'express';
 import { app } from '../index';
 import Shorted from '../db/models/Shorted';
+import { redis } from '../db/redis';
 
 describe('Shortener e2e | module', () => {
   const express: Application = app;
@@ -13,6 +14,7 @@ describe('Shortener e2e | module', () => {
   });
   afterAll(async () => {
     await sequelizeConnection.close();
+    redis.disconnect();
   });
   afterEach(async () => {
     await Shorted.destroy({ where: {} });
