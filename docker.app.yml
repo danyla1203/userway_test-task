@@ -1,0 +1,26 @@
+# docker-compose.yml
+version: '3.9'
+services:
+  database:
+    image: "mysql"
+    restart: always
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_DATABASE: 'url_shortener'
+      MYSQL_USER: 'test'
+      MYSQL_PASSWORD: 'test_pass'
+      MYSQL_ROOT_PASSWORD: 'root'
+  app:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    container_name: url_shortener
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    env_file: .env
+    environment:
+      - DB_HOST=database
