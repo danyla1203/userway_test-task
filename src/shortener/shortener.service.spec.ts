@@ -1,6 +1,10 @@
 import { nanoid } from 'nanoid';
 import { getFullUrl, shortenUrl } from './shortener.service';
-import { createShortenedRecord, getShortenedRecord } from './shortener.dao';
+import {
+  createShortenedRecord,
+  getShortenedRecord,
+  getShortenedRecordByOrigin,
+} from './shortener.dao';
 import Shorted from '../db/models/Shorted';
 
 jest.mock('./shortener.dao');
@@ -8,6 +12,7 @@ jest.mock('nanoid');
 
 const mockGetShortenedRecord = jest.mocked(getShortenedRecord);
 const mockCreateShortenedRecord = jest.mocked(createShortenedRecord);
+const mockGetShortenedRecordByOrigin = jest.mocked(getShortenedRecordByOrigin);
 const mockNanoid = jest.mocked(nanoid);
 
 describe('Shortener service', () => {
@@ -31,7 +36,7 @@ describe('Shortener service', () => {
         url: 'some url',
         shorted: 'some shorted url',
       };
-      mockGetShortenedRecord.mockResolvedValueOnce(item as Shorted);
+      mockGetShortenedRecordByOrigin.mockResolvedValueOnce(item as Shorted);
       await expect(shortenUrl('some url')).resolves.toEqual(item);
     });
     it('should create new item if url does not exist', async () => {
@@ -39,7 +44,7 @@ describe('Shortener service', () => {
         url: 'some url',
         shorted: 'some shorted url',
       };
-      mockGetShortenedRecord.mockResolvedValueOnce(null);
+      mockGetShortenedRecordByOrigin.mockResolvedValueOnce(null);
       mockCreateShortenedRecord.mockResolvedValueOnce(expected as Shorted);
       mockNanoid.mockReturnValueOnce('ABC123_fsdfgk13');
 
