@@ -37,6 +37,7 @@ Shorted.init(
   {
     sequelize: sequelizeConnection,
     modelName: 'Shorted',
+    timestamps: false,
   },
 );
 
