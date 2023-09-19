@@ -1,6 +1,8 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import * as dotenv from 'dotenv';
-import dbInit from './db/init';
+import { dbInit } from './db/init';
+import router from './router';
+import { errorHandler } from './middlewares/errorHandler';
 
 dotenv.config();
 
@@ -10,11 +12,8 @@ const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.get('/', async (_: Request, res: Response): Promise<Response> => {
-  return res.status(200).send({
-    message: `Endpoints available at http://localhost:${process.env.PORT}/api/v1`,
-  });
-});
+app.use('/api/v1', router);
+app.use(errorHandler);
 
 try {
   app.listen(process.env.PORT, async () => {

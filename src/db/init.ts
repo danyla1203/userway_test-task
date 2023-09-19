@@ -4,7 +4,6 @@ const isDev = process.env.NODE_ENV === 'dev';
 
 console.log(process.env.DB_HOST);
 
-const dbInit = () => {
-  Shorted.sync({ alter: isDev });
+export const dbInit = () => {
+  Shorted.sync({ alter: isDev, force: isDev });
 };
-export default dbInit;
