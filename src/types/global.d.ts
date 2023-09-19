@@ -8,5 +8,7 @@ namespace NodeJS {
     NODE_ENV: string;
     DB_HOST: string;
     DB_PORT: string;
+    REDIS_HOST: string;
+    REDIS_PORT: string;
   }
 }
