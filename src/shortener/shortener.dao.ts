@@ -20,5 +20,5 @@ export const saveShortendInRedis = (record: Shorted) => {
     url: record.url,
     shorted: record.shorted,
   });
-  return redis.set(record.shorted, payload, 'EX', 60 * 60 * 24 * 30);
+  return redis.set(record.shorted, payload, 'EX', 60 * 60 * 24 * 10);
 };
