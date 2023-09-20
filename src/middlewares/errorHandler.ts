@@ -8,6 +8,7 @@ export function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
+  console.error(err);
   if (err instanceof RuntimeError) {
     return res.status(err.code).json({ message: err.message, code: err.code });
   }
